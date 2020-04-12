@@ -16,7 +16,7 @@ class App extends React.Component {
       .then((res) => res.json())
       .then((users) => {
         console.log("Users: ", users);
-        this.setState({ userArray: users });
+        this.setState({ usersArr: users });
       })
       .catch((err) => {
         console.log("Err: ", err);
@@ -41,7 +41,10 @@ class App extends React.Component {
   };
 
   render() {
-    console.log("Rendering");
+    console.log("Rendering: ", this.state);
+
+    let userState = this.state.usersArr;
+    console.log("userState: ", userState);
     return (
       <div>
         <h1>Github Users</h1>
@@ -52,9 +55,8 @@ class App extends React.Component {
         />
         <button onClick={this.fetchUser}>Search</button>
         <div className="users">
-          {this.state.usersArr.map((users) => (
-            <p>{users}</p>
-          ))}
+          <img src={userState.avatar_url} alt={userState.avatar_url} />
+          <p>{userState.name}</p>
         </div>
       </div>
     );
