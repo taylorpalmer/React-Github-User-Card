@@ -1,4 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import {
+  ButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
+
 import "./App.css";
 
 class App extends React.Component {
@@ -65,11 +72,18 @@ class App extends React.Component {
       });
   };
 
+  
+
+  const [dropdownOpen, setOpen] = useState(false);
+
+  const toggle = () => setOpen(!dropdownOpen);
+
   render() {
     console.log("Rendering: ", this.state);
 
     let userState = this.state.usersArr;
     console.log("userState: ", userState);
+
     return (
       <div>
         <div>
@@ -87,19 +101,35 @@ class App extends React.Component {
           <div className="name">
             <h2>{userState.name}</h2>
             <h3>Username: {userState.login}</h3>
+            <div className="follow">
+              <span>Followers: {userState.followers}</span>
+              <span>Following: {userState.following}</span>
+            </div>
           </div>
-          <div className="urls">
-            <a href={userState.url}>Github Profile</a>
-            <br />
-            <a href={userState.repos_url}>Github Projects</a>
-          </div>
-          <div className="followers">
-            <a href={userState.followers_url}>Followers</a>
-            <p>Followers: {userState.followers}</p>
-          </div>
-          <div className="following">
-            <a href={userState.following_url}>Following</a>
-            <p>Following: {userState.following}</p>
+
+          <div>
+            <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
+              <DropdownToggle tag="a" className="nav-link" caret>
+                Links to Github
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem tag="a" href={userState.url} active>
+                  User's Github Profile
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem tag="a" href={userState.repos_url} active>
+                  User's Github Projects
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem tag="a" href={userState.followers_url} active>
+                  User's Followers
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem tag="a" href={userState.following_url} active>
+                  Who User is Following
+                </DropdownItem>
+              </DropdownMenu>
+            </ButtonDropdown>
           </div>
         </div>
       </div>
