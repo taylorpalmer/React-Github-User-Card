@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import { HeaderWrap, LinksWrapper, StyledLink, UserCardWrap } from "./Styles";
 
 class App extends React.Component {
   constructor() {
@@ -72,36 +72,39 @@ class App extends React.Component {
     console.log("userState: ", userState);
     return (
       <div>
-        <div>
+        <HeaderWrap>
           <h1>Github Users</h1>
-          <input
-            type="text"
-            value={this.state.usersText}
-            onChange={this.handleChanges}
-          />
-          <button onClick={this.fetchUser}>Search</button>
-        </div>
+          <form onSubmit={(event) => this.submitHandler(event)}>
+            <input
+              type="text"
+              value={this.state.usersText}
+              onChange={this.handleChanges}
+            />
+            <button onClick={this.fetchUser}>Search</button>
+          </form>
+        </HeaderWrap>
         <hr />
-        <div className="users">
-          <img src={userState.avatar_url} alt={userState.avatar_url} />
+        <UserCardWrap className="users">
+          <img
+            width="200"
+            src={userState.avatar_url}
+            alt={userState.avatar_url}
+          />
           <div className="name">
-            <h2>{userState.name}</h2>
-            <h3>Username: {userState.login}</h3>
+            <h3>{userState.name}</h3>
+            <h4>Username: {userState.login}</h4>
           </div>
-          <div className="urls">
-            <a href={userState.url}>Github Profile</a>
-            <br />
-            <a href={userState.repos_url}>Github Projects</a>
-          </div>
-          <div className="followers">
-            <a href={userState.followers_url}>Followers</a>
-            <p>Followers: {userState.followers}</p>
-          </div>
-          <div className="following">
-            <a href={userState.following_url}>Following</a>
-            <p>Following: {userState.following}</p>
-          </div>
-        </div>
+          <LinksWrapper className="links">
+            <StyledLink href={userState.url}>Github Profile</StyledLink>
+            <StyledLink href={userState.repos_url}>Github Projects</StyledLink>
+            <StyledLink href={userState.followers_url}>
+              Followers: {userState.followers}
+            </StyledLink>
+            <StyledLink href={userState.following_url}>
+              Following: {userState.following}
+            </StyledLink>
+          </LinksWrapper>
+        </UserCardWrap>
       </div>
     );
   }
